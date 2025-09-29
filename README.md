@@ -323,7 +323,8 @@ mvn test -Dtest=PermissionSystemTest
 
 #### 首页
 
-https://bo-spj.oss-cn-beijing.aliyuncs.com/bo-spj-sp/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202025-09-29%20133607.png?Expires=1759125035&OSSAccessKeyId=TMP.3KpEHdzkdMccorGswRs9U9wBRrUqF8MtF88MyEDK4Wgf4eGJ31i5ZGw7oNqHL68EHZZpztkgQMHnE5JW4TtTKywMaWvFJo&Signature=EfgQNlwe6bHmhYDge56YjPmOF60%3D
+![这是图片](https://bo-spj.oss-cn-beijing.aliyuncs.com/bo-spj-sp/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202025-09-29%20133607.png?Expires=1759125035&OSSAccessKeyId=TMP.3KpEHdzkdMccorGswRs9U9wBRrUqF8MtF88MyEDK4Wgf4eGJ31i5ZGw7oNqHL68EHZZpztkgQMHnE5JW4TtTKywMaWvFJo&Signature=EfgQNlwe6bHmhYDge56YjPmOF60%3D)
+
 
 ### 代码规范
 
