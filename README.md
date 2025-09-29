@@ -321,9 +321,32 @@ mvn test -Dtest=PermissionSystemTest
 5. 添加相应的单元测试
 
 
-#### 首页
+### 首页
 
 ![这是图片](https://bo-spj.oss-cn-beijing.aliyuncs.com/bo-spj-sp/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202025-09-29%20133607.png?Expires=1759125035&OSSAccessKeyId=TMP.3KpEHdzkdMccorGswRs9U9wBRrUqF8MtF88MyEDK4Wgf4eGJ31i5ZGw7oNqHL68EHZZpztkgQMHnE5JW4TtTKywMaWvFJo&Signature=EfgQNlwe6bHmhYDge56YjPmOF60%3D)
+
+
+###  文化传承
+
+![这是图片](https://bo-spj.oss-cn-beijing.aliyuncs.com/bo-spj-sp/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202025-09-29%20134312.png?Expires=1759125302&OSSAccessKeyId=TMP.3KpEHdzkdMccorGswRs9U9wBRrUqF8MtF88MyEDK4Wgf4eGJ31i5ZGw7oNqHL68EHZZpztkgQMHnE5JW4TtTKywMaWvFJo&Signature=2W5oF7k84jOPUC6UA%2F5%2FAqLhEZg%3D)
+
+###  美食体验
+![这是图片](
+https://bo-spj.oss-cn-beijing.aliyuncs.com/bo-spj-sp/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202025-09-29%20134324.png?Expires=1759125389&OSSAccessKeyId=TMP.3KpEHdzkdMccorGswRs9U9wBRrUqF8MtF88MyEDK4Wgf4eGJ31i5ZGw7oNqHL68EHZZpztkgQMHnE5JW4TtTKywMaWvFJo&Signature=%2F0pgoKcKgVreTaVfC6IX1PmeoaE%3D)
+
+### 体验活动
+![这是图片](https://bo-spj.oss-cn-beijing.aliyuncs.com/bo-spj-sp/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202025-09-29%20134338.png?Expires=1759125419&OSSAccessKeyId=TMP.3KpEHdzkdMccorGswRs9U9wBRrUqF8MtF88MyEDK4Wgf4eGJ31i5ZGw7oNqHL68EHZZpztkgQMHnE5JW4TtTKywMaWvFJo&Signature=ZMKXWpBxChC79XMTPo4gDksHGj4%3D)
+
+### 关于我们
+![这是图片](https://bo-spj.oss-cn-beijing.aliyuncs.com/bo-spj-sp/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202025-09-29%20134348.png?Expires=1759125439&OSSAccessKeyId=TMP.3KpEHdzkdMccorGswRs9U9wBRrUqF8MtF88MyEDK4Wgf4eGJ31i5ZGw7oNqHL68EHZZpztkgQMHnE5JW4TtTKywMaWvFJo&Signature=fAQQ2LChTx7QTeacUHCfBkpQuH8%3D)
+
+### 后台管理首页
+![这是图片](https://bo-spj.oss-cn-beijing.aliyuncs.com/bo-spj-sp/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202025-09-29%20134427.png?Expires=1759125459&OSSAccessKeyId=TMP.3KpEHdzkdMccorGswRs9U9wBRrUqF8MtF88MyEDK4Wgf4eGJ31i5ZGw7oNqHL68EHZZpztkgQMHnE5JW4TtTKywMaWvFJo&Signature=sbdQhc9FdgiTaaViKtwmhnMi7YY%3D)
+
+### 产品管理
+![这是图片](https://bo-spj.oss-cn-beijing.aliyuncs.com/bo-spj-sp/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202025-09-29%20134446.png?Expires=1759125506&OSSAccessKeyId=TMP.3KpEHdzkdMccorGswRs9U9wBRrUqF8MtF88MyEDK4Wgf4eGJ31i5ZGw7oNqHL68EHZZpztkgQMHnE5JW4TtTKywMaWvFJo&Signature=THWivyn4XKv1eRSCGJuA%2FuS%2FMZk%3D)
+
+
 
 
 ### 代码规范
