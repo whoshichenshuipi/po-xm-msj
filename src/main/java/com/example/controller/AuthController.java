@@ -1,10 +1,8 @@
 package com.example.controller;
 
+
 import com.example.annotation.RequirePermission;
-import com.example.dto.AuthResponse;
-import com.example.dto.LoginRequest;
-import com.example.dto.RegisterRequest;
-import com.example.dto.UserResponse;
+import com.example.dto.*;
 import com.example.service.AuthService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -18,7 +16,7 @@ import javax.validation.Valid;
 
 /**
  * 认证控制器
- * 
+ *
  * @author example
  * @since 1.0.0
  */
@@ -36,14 +34,15 @@ public class AuthController {
      */
     @PostMapping("/register")
     @RequirePermission(requireLogin = false, description = "注册接口，无需登录")
-    @Operation(summary = "用户注册", description = "新用户注册，默认为消费者角色")
+    @Operation(summary = "用户注册", description = "新用户注册，支持选择角色：CONSUMER(消费者)、MERCHANT(商户)、ADMIN(管理员)")
     public ResponseEntity<AuthResponse> register(@Valid @RequestBody RegisterRequest request, HttpSession session) {
         AuthResponse response = authService.register(request);
-        
-        if (response.getToken() != null) {
+
+        if (response.getToken() != null && response.getUser() != null) {
             // 注册成功，设置session
             session.setAttribute("token", response.getToken());
             session.setAttribute("user", response.getUser());
+            session.setAttribute("userId", response.getUser().getId());  // 设置用户ID
             return ResponseEntity.status(HttpStatus.CREATED).body(response);
         } else {
             return ResponseEntity.badRequest().body(response);
@@ -58,11 +57,13 @@ public class AuthController {
     @Operation(summary = "用户登录", description = "支持用户名或邮箱登录")
     public ResponseEntity<AuthResponse> login(@Valid @RequestBody LoginRequest request, HttpSession session) {
         AuthResponse response = authService.login(request);
-        
-        if (response.getToken() != null) {
+
+        if (response.getToken() != null && response.getUser() != null) {
             // 登录成功，设置session
             session.setAttribute("token", response.getToken());
             session.setAttribute("user", response.getUser());
+            session.setAttribute("userId", response.getUser().getId());  // 设置用户ID
+            session.setAttribute("userRole", response.getUser().getRole().name());  // 设置用户角色
             return ResponseEntity.ok(response);
         } else {
             return ResponseEntity.badRequest().body(response);
@@ -73,7 +74,7 @@ public class AuthController {
      * 用户登出
      */
     @PostMapping("/logout")
-    @RequirePermission(roles = {"ADMIN", "MERCHANT", "CONSUMER"}, description = "所有角色都可以登出")
+    //@RequirePermission(roles = {"ADMIN", "MERCHANT", "CONSUMER"}, description = "所有角色都可以登出")
     @Operation(summary = "用户登出", description = "清除用户session")
     public ResponseEntity<String> logout(HttpSession session) {
         session.invalidate();
@@ -84,7 +85,7 @@ public class AuthController {
      * 获取当前用户信息
      */
     @GetMapping("/me")
-    @RequirePermission(roles = {"ADMIN", "MERCHANT", "CONSUMER"}, description = "所有角色都可以查看自己的信息")
+   // @RequirePermission(roles = {"ADMIN", "MERCHANT", "CONSUMER"}, description = "所有角色都可以查看自己的信息")
     @Operation(summary = "获取当前用户信息", description = "获取当前登录用户的信息")
     public ResponseEntity<UserResponse> getCurrentUser(HttpSession session) {
         UserResponse user = (UserResponse) session.getAttribute("user");
@@ -107,6 +108,22 @@ public class AuthController {
             return ResponseEntity.ok(new AuthResponse("已登录", user));
         } else {
             return ResponseEntity.ok(new AuthResponse("未登录"));
+        }
+    }
+
+    /**
+     * 获取用户权限信息
+     */
+    @GetMapping("/permissions")
+   // @RequirePermission(roles = {"ADMIN", "MERCHANT", "CONSUMER"}, description = "所有角色都可以查看自己的权限")
+    @Operation(summary = "获取用户权限", description = "获取当前登录用户的权限信息，包括角色和权限描述")
+    public ResponseEntity<PermissionResponse> getUserPermissions(HttpSession session) {
+        UserResponse user = (UserResponse) session.getAttribute("user");
+        if (user != null) {
+            PermissionResponse permissionResponse = new PermissionResponse(user);
+            return ResponseEntity.ok(permissionResponse);
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
     }
 }

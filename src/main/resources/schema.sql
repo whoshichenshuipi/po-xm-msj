@@ -6,6 +6,10 @@ CREATE TABLE IF NOT EXISTS merchant (
   address VARCHAR(300),
   culture_positioning VARCHAR(200), -- 文化定位
   description VARCHAR(1000),
+  cultural_level VARCHAR(50), -- 文化资质级别：national(国家级)、provincial(省级)、municipal(市级)
+  rating VARCHAR(10), -- 文化评级：A/B/C
+  heritage_cert TINYINT(1) DEFAULT 0, -- 老字号认证
+  intangible_heritage TINYINT(1) DEFAULT 0, -- 非遗认证
   created_at DATETIME,
   updated_at DATETIME,
   approved TINYINT(1) DEFAULT 0
@@ -255,4 +259,98 @@ CREATE TABLE IF NOT EXISTS system_log (
   result VARCHAR(32) DEFAULT 'SUCCESS', -- SUCCESS/FAIL
   created_at DATETIME
 );
+
+-- 食品详情表
+CREATE TABLE IF NOT EXISTS food_detail (
+  id BIGINT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(200) NOT NULL COMMENT '食品名称',
+  description TEXT COMMENT '食品描述',
+  image_url VARCHAR(500) COMMENT '食品图片URL',
+  video_url VARCHAR(500) COMMENT '制作视频URL',
+  price DECIMAL(10,2) NOT NULL COMMENT '价格',
+  rating DECIMAL(3,2) DEFAULT 0.00 COMMENT '评分',
+  category VARCHAR(100) NOT NULL COMMENT '食品分类',
+  tags VARCHAR(500) COMMENT '标签，逗号分隔',
+  merchant_id BIGINT COMMENT '关联商户ID',
+  culture_story TEXT COMMENT '文化故事',
+  ingredients TEXT COMMENT '食材配料',
+  cooking_method TEXT COMMENT '制作方法',
+  nutrition_info TEXT COMMENT '营养信息',
+  origin_story TEXT COMMENT '起源故事',
+  cultural_significance TEXT COMMENT '文化意义',
+  preparation_time INT COMMENT '制作时间(分钟)',
+  difficulty_level VARCHAR(50) COMMENT '制作难度：EASY/MEDIUM/HARD',
+  serving_size INT COMMENT '建议份量',
+  is_featured TINYINT(1) DEFAULT 0 COMMENT '是否推荐',
+  view_count INT DEFAULT 0 COMMENT '浏览次数',
+  like_count INT DEFAULT 0 COMMENT '点赞次数',
+  status VARCHAR(32) DEFAULT 'ACTIVE' COMMENT '状态：ACTIVE/INACTIVE',
+  created_at DATETIME,
+  updated_at DATETIME
+);
+
+-- 路线详情表
+CREATE TABLE IF NOT EXISTS route_details (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    route_id BIGINT NOT NULL COMMENT '路线ID',
+    route_name VARCHAR(100) NOT NULL COMMENT '路线名称',
+    description TEXT COMMENT '路线描述',
+    route_type VARCHAR(50) NOT NULL COMMENT '路线类型',
+    total_distance INT NOT NULL COMMENT '总距离（米）',
+    estimated_duration INT NOT NULL COMMENT '预计时长（分钟）',
+    difficulty_level INT NOT NULL DEFAULT 3 COMMENT '路线难度等级（1-5）',
+    rating DECIMAL(3,2) DEFAULT 0.00 COMMENT '路线评分（1-5）',
+    status VARCHAR(20) NOT NULL DEFAULT 'ACTIVE' COMMENT '路线状态',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+    created_by BIGINT COMMENT '创建者ID',
+    INDEX idx_route_id (route_id),
+    INDEX idx_route_type (route_type),
+    INDEX idx_status (status),
+    INDEX idx_rating (rating)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='路线详情表';
+
+-- 路线节点表
+CREATE TABLE IF NOT EXISTS route_nodes (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    route_id BIGINT NOT NULL COMMENT '路线ID',
+    node_order INT NOT NULL COMMENT '节点顺序',
+    node_name VARCHAR(100) NOT NULL COMMENT '节点名称',
+    description TEXT COMMENT '节点描述',
+    node_type VARCHAR(50) NOT NULL COMMENT '节点类型',
+    merchant_id BIGINT COMMENT '关联的商户ID',
+    attraction_id BIGINT COMMENT '关联的景点ID',
+    longitude DECIMAL(10,7) COMMENT '经度',
+    latitude DECIMAL(10,7) COMMENT '纬度',
+    stay_duration INT DEFAULT 0 COMMENT '停留时间（分钟）',
+    status VARCHAR(20) NOT NULL DEFAULT 'ACTIVE' COMMENT '节点状态',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+    INDEX idx_route_id (route_id),
+    INDEX idx_node_order (route_id, node_order),
+    INDEX idx_node_type (node_type),
+    INDEX idx_merchant_id (merchant_id),
+    INDEX idx_attraction_id (attraction_id),
+    INDEX idx_status (status)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='路线节点表';
+
+-- 文化产品表
+CREATE TABLE IF NOT EXISTS cultural_product (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    product_name VARCHAR(200) NOT NULL COMMENT '产品名称',
+    merchant_id BIGINT NOT NULL COMMENT '所属商户ID',
+    merchant_name VARCHAR(100) COMMENT '所属商户名称',
+    cultural_tags TEXT COMMENT '文化标签(JSON格式，数组)',
+    cultural_story TEXT COMMENT '文化故事',
+    images TEXT COMMENT '产品图片(JSON格式，数组)',
+    status VARCHAR(20) NOT NULL DEFAULT 'PENDING' COMMENT '审核状态：PENDING(待审核), APPROVED(已通过), REJECTED(已驳回)',
+    approved_by BIGINT COMMENT '审核人ID',
+    approved_at TIMESTAMP NULL COMMENT '审核时间',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+    INDEX idx_merchant_id (merchant_id),
+    INDEX idx_status (status),
+    INDEX idx_approved_by (approved_by),
+    INDEX idx_created_at (created_at)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='文化产品表';
 

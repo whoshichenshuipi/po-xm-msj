@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+
 @Service
 @Transactional
 public class NotificationService {
@@ -18,6 +20,12 @@ public class NotificationService {
     public Notification create(Notification n) {
         n.setId(null);
         if (n.getStatus() == null) n.setStatus("UNREAD");
+        
+        // 设置创建时间和更新时间
+        LocalDateTime now = LocalDateTime.now();
+        n.setCreatedAt(now);
+        n.setUpdatedAt(now);
+        
         mapper.insert(n);
         return n;
     }
@@ -26,6 +34,7 @@ public class NotificationService {
         Notification n = mapper.selectById(id);
         if (n != null) {
             n.setStatus("READ");
+            n.setUpdatedAt(LocalDateTime.now());
             mapper.updateById(n);
         }
         return n;

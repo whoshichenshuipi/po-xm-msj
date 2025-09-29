@@ -2,6 +2,7 @@ package com.example.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -31,6 +32,22 @@ public class Merchant {
     private String culturePositioning;
 
     private String description;
+
+    // 文化资质级别：national(国家级)、provincial(省级)、municipal(市级)
+    @TableField("cultural_level")
+    private String culturalLevel;
+    
+    // 文化评级：A/B/C
+    @TableField("rating")
+    private String rating;
+    
+    // 老字号认证
+    @TableField("heritage_cert")
+    private Boolean heritageCert;
+    
+    // 非遗认证
+    @TableField("intangible_heritage")
+    private Boolean intangibleHeritage;
 
     private Boolean approved;
 

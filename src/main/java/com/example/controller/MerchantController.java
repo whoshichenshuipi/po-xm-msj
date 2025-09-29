@@ -73,15 +73,24 @@ public class MerchantController {
 
     @GetMapping
     @RequirePermission(
-        roles = {UserRole.ADMIN, UserRole.CONSUMER}, 
-        description = "管理员和消费者可以查看商户列表"
+        roles = {UserRole.ADMIN, UserRole.MERCHANT, UserRole.CONSUMER}, 
+        description = "所有角色都可以查看商户列表"
     )
-    public ResponseEntity<Page<Merchant>> page(
+    public ResponseEntity<?> page(
             @RequestParam(required = false) String keyword,
             @RequestParam(required = false) Boolean approved,
             @RequestParam(defaultValue = "1") int pageNo,
             @RequestParam(defaultValue = "10") int pageSize) {
-        return ResponseEntity.ok(merchantService.page(keyword, approved, pageNo, pageSize));
+        Page<Merchant> page = merchantService.page(keyword, approved, pageNo, pageSize);
+        
+        // 转换为标准响应格式
+        java.util.Map<String, Object> response = new java.util.HashMap<>();
+        response.put("records", page.getRecords());
+        response.put("total", page.getTotal());
+        response.put("current", page.getCurrent());
+        response.put("size", page.getSize());
+        
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping("/{id}/approve")
@@ -89,9 +98,12 @@ public class MerchantController {
         roles = {UserRole.ADMIN}, 
         description = "只有管理员可以审核商户"
     )
-    public ResponseEntity<?> approve(@PathVariable Long id, @RequestParam boolean approved) {
+    public ResponseEntity<?> approve(@PathVariable Long id, @RequestBody java.util.Map<String, Object> params) {
         try {
-            return ResponseEntity.ok(merchantService.approve(id, approved));
+            Boolean approved = params.get("approved") != null ? 
+                Boolean.valueOf(params.get("approved").toString()) : true;
+            Merchant merchant = merchantService.approve(id, approved);
+            return ResponseEntity.ok(merchant);
         } catch (RuntimeException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }

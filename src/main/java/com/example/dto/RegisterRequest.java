@@ -1,11 +1,13 @@
 package com.example.dto;
 
+import com.example.entity.UserRole;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 /**
@@ -37,4 +39,7 @@ public class RegisterRequest {
     
     @NotBlank(message = "确认密码不能为空")
     private String confirmPassword;
+    
+    @NotNull(message = "角色不能为空")
+    private UserRole role = UserRole.CONSUMER; // 默认为消费者角色
 }

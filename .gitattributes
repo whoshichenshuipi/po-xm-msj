@@ -1,0 +1,30 @@
+# 设置默认行为，自动设置行结束符
+* text=auto eol=lf
+
+# 源代码文件使用 UTF-8
+*.java text eol=lf encoding=utf-8
+*.yml text eol=lf encoding=utf-8
+*.yaml text eol=lf encoding=utf-8
+*.properties text eol=lf encoding=utf-8
+*.xml text eol=lf encoding=utf-8
+
+# 文档文件
+*.md text eol=lf
+*.txt text eol=lf
+
+# 前端文件
+*.js text eol=lf encoding=utf-8
+*.ts text eol=lf encoding=utf-8
+*.vue text eol=lf encoding=utf-8
+*.json text eol=lf encoding=utf-8
+
+# 禁止修改的文件，保持其原始格式
+*.pdf binary
+*.jar binary
+*.class binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+

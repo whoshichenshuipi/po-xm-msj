@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * 权限测试控制器
  * 用于测试和验证权限系统功能
- * 
+ *
  * @author example
  * @since 1.0.0
  */
@@ -27,7 +27,7 @@ public class PermissionTestController {
      */
     @GetMapping("/admin-only")
     @RequirePermission(
-        roles = {UserRole.ADMIN}, 
+        roles = {UserRole.ADMIN},
         description = "只有管理员可以访问"
     )
     public ResponseEntity<String> adminOnly() {
@@ -39,7 +39,7 @@ public class PermissionTestController {
      */
     @GetMapping("/merchant-only")
     @RequirePermission(
-        roles = {UserRole.MERCHANT}, 
+        roles = {UserRole.MERCHANT},
         description = "只有商户可以访问"
     )
     public ResponseEntity<String> merchantOnly() {
@@ -51,7 +51,7 @@ public class PermissionTestController {
      */
     @GetMapping("/consumer-only")
     @RequirePermission(
-        roles = {UserRole.CONSUMER}, 
+        roles = {UserRole.CONSUMER},
         description = "只有消费者可以访问"
     )
     public ResponseEntity<String> consumerOnly() {
@@ -63,7 +63,7 @@ public class PermissionTestController {
      */
     @GetMapping("/admin-merchant")
     @RequirePermission(
-        roles = {UserRole.ADMIN, UserRole.MERCHANT}, 
+        roles = {UserRole.ADMIN, UserRole.MERCHANT},
         description = "管理员和商户可以访问"
     )
     public ResponseEntity<String> adminMerchant() {
@@ -75,7 +75,7 @@ public class PermissionTestController {
      */
     @GetMapping("/all-roles")
     @RequirePermission(
-        roles = {UserRole.ADMIN, UserRole.MERCHANT, UserRole.CONSUMER}, 
+        roles = {UserRole.ADMIN, UserRole.MERCHANT, UserRole.CONSUMER},
         description = "所有角色都可以访问"
     )
     public ResponseEntity<String> allRoles() {
@@ -87,7 +87,7 @@ public class PermissionTestController {
      */
     @GetMapping("/ownership-test")
     @RequirePermission(
-        roles = {UserRole.ADMIN, UserRole.MERCHANT}, 
+        roles = {UserRole.ADMIN, UserRole.MERCHANT},
         description = "测试资源所有权验证",
         requireOwnership = true,
         ownerIdParam = "merchantId"
@@ -111,55 +111,55 @@ public class PermissionTestController {
     /**
      * 获取当前用户信息
      */
-    @GetMapping("/current-user")
-    @RequirePermission(
-        roles = {UserRole.ADMIN, UserRole.MERCHANT, UserRole.CONSUMER}, 
-        description = "获取当前用户信息"
-    )
-    public ResponseEntity<?> getCurrentUser() {
-        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-        if (attributes == null) {
-            return ResponseEntity.badRequest().body("无法获取请求信息");
-        }
-        
-        HttpServletRequest request = attributes.getRequest();
-        var user = PermissionValidator.getCurrentUser(request);
-        
-        if (user == null) {
-            return ResponseEntity.ok("未登录用户");
-        }
-        
-        return ResponseEntity.ok(user);
-    }
+//    @GetMapping("/current-user")
+//    @RequirePermission(
+//        roles = {UserRole.ADMIN, UserRole.MERCHANT, UserRole.CONSUMER},
+//        description = "获取当前用户信息"
+//    )
+//    public ResponseEntity<?> getCurrentUser() {
+//        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+//        if (attributes == null) {
+//            return ResponseEntity.badRequest().body("无法获取请求信息");
+//        }
+//
+//        HttpServletRequest request = attributes.getRequest();
+//        var user = PermissionValidator.getCurrentUser(request);
+//
+//        if (user == null) {
+//            return ResponseEntity.ok("未登录用户");
+//        }
+//
+//        return ResponseEntity.ok(user);
+//    }
 
-    /**
-     * 测试权限验证工具类
-     */
-    @GetMapping("/permission-info")
-    @RequirePermission(
-        roles = {UserRole.ADMIN}, 
-        description = "只有管理员可以查看权限信息"
-    )
-    public ResponseEntity<?> getPermissionInfo() {
-        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-        if (attributes == null) {
-            return ResponseEntity.badRequest().body("无法获取请求信息");
-        }
-        
-        HttpServletRequest request = attributes.getRequest();
-        var user = PermissionValidator.getCurrentUser(request);
-        
-        if (user == null) {
-            return ResponseEntity.ok("未登录用户");
-        }
-        
-        return ResponseEntity.ok(String.format(
-            "用户信息: %s, 角色: %s, 是否管理员: %s, 是否商户: %s, 是否消费者: %s",
-            user.getUsername(),
-            user.getRole(),
-            PermissionValidator.isAdmin(user),
-            PermissionValidator.isMerchant(user),
-            PermissionValidator.isConsumer(user)
-        ));
-    }
+//    /**
+//     * 测试权限验证工具类
+//     */
+//    @GetMapping("/permission-info")
+//    @RequirePermission(
+//        roles = {UserRole.ADMIN},
+//        description = "只有管理员可以查看权限信息"
+//    )
+//    public ResponseEntity<?> getPermissionInfo() {
+//        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+//        if (attributes == null) {
+//            return ResponseEntity.badRequest().body("无法获取请求信息");
+//        }
+//
+//        HttpServletRequest request = attributes.getRequest();
+//        var user = PermissionValidator.getCurrentUser(request);
+//
+//        if (user == null) {
+//            return ResponseEntity.ok("未登录用户");
+//        }
+//
+//        return ResponseEntity.ok(String.format(
+//            "用户信息: %s, 角色: %s, 是否管理员: %s, 是否商户: %s, 是否消费者: %s",
+//            user.getUsername(),
+//            user.getRole(),
+//            PermissionValidator.isAdmin(user),
+//            PermissionValidator.isMerchant(user),
+//            PermissionValidator.isConsumer(user)
+//        ));
+//    }
 }

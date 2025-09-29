@@ -52,7 +52,8 @@ public class AuthService {
         user.setEmail(request.getEmail());
         user.setFullName(request.getFullName());
         user.setPassword(hashPassword(request.getPassword()));
-        user.setRole(UserRole.CONSUMER); // 默认为消费者角色
+        // 使用请求中的角色，如果没有指定则默认为消费者角色
+        user.setRole(request.getRole() != null ? request.getRole() : UserRole.CONSUMER);
 
         User savedUser = userRepository.save(user);
         
@@ -68,13 +69,13 @@ public class AuthService {
     public AuthResponse login(LoginRequest request) {
         // 查找用户（支持用户名或邮箱登录）
         Optional<User> userOpt = userRepository.findByUsername(request.getUsernameOrEmail());
-//        if (userOpt.isEmpty()) {
-//            userOpt = userRepository.findByEmail(request.getUsernameOrEmail());
-//        }
-//
-//        if (userOpt.isEmpty()) {
-//            return new AuthResponse("用户名或邮箱不存在");
-//        }
+        if (!userOpt.isPresent()) {
+            userOpt = userRepository.findByEmail(request.getUsernameOrEmail());
+        }
+
+        if (!userOpt.isPresent()) {
+            return new AuthResponse("用户名或邮箱不存在");
+        }
 
         User user = userOpt.get();
         

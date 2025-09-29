@@ -1,6 +1,7 @@
 package com.example.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
@@ -23,7 +24,7 @@ public class MerchantQualification {
 
     private String title;
 
-    private String level;
+    private String level; // national/provincial/municipal
 
     private String certNo;
 
@@ -33,6 +34,10 @@ public class MerchantQualification {
 
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+    
+    // 用于前端显示，不映射到数据库
+    @TableField(exist = false)
+    private String merchantName;
 }
 
 

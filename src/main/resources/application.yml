@@ -7,29 +7,34 @@ spring:
   application:
     name: spring-boot-demo
   
-  # 数据源配置 - MySQL 8
+  # Session配置
+  session:
+    store-type: none  # 使用内存存储
+    timeout: 3600  # Session超时时间（秒）
+  
+  # 数据源配置
   datasource:
-    url: jdbc:mysql://localhost:3306/food_street?useSSL=false&useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
+    url: jdbc:mysql://localhost:3306/food_street?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
-    password: root
+
   
   # JPA配置
   jpa:
     hibernate:
-      ddl-auto: none
+      ddl-auto: update
     show-sql: true
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.MySQL8Dialect
         format_sql: true
+        dialect: org.hibernate.dialect.MySQL8Dialect
   
-  # 关闭H2控制台（切换MySQL）
-#  sql:
-#    init:
-#      mode: always
-#      schema-locations: classpath:schema.sql
-#      data-locations: classpath:data.sql,classpath:checkin-test-data.sql
+  # SQL初始化配置
+  sql:
+    init:
+      mode: never
+      schema-locations: classpath:schema.sql
+      data-locations: classpath:data.sql
 
 # 日志配置
 logging:
@@ -81,3 +86,23 @@ mybatis-plus:
     db-config:
       id-type: auto
       table-underline: true
+
+# 阿里云OSS配置
+aliyun:
+  oss:
+    endpoint: https://oss-cn-beijing.aliyuncs.com
+    bucket-name: bo-spj
+    domain: https://bo-spj.oss-cn-beijing.aliyuncs.com
+    # 文件上传配置
+    upload:
+      max-file-size: 10MB
+      max-request-size: 50MB
+      allowed-extensions: jpg,jpeg,png,gif,bmp,webp
+      # 文件存储路径配置
+      paths:
+        avatar: avatar/
+        merchant: merchant/
+        product: product/
+        cultural: cultural/
+        route: route/
+        temp: temp/
