@@ -145,12 +145,6 @@ src/
    mvn spring-boot:run
    ```
 
-4. **访问应用**
-   - 应用地址: http://localhost:8080/api
-   - 登录页面: http://localhost:8080/api/login.html
-   - 注册页面: http://localhost:8080/api/register.html
-   - API文档: http://localhost:8080/api/swagger-ui.html
-   - 主页: http://localhost:8080/api/index.html
 
 ### 使用 Maven 打包
 
@@ -276,14 +270,6 @@ curl -X GET http://localhost:8080/api/auth/me \
 
 系统使用AOP（面向切面编程）实现权限控制：
 
-```java
-@RequirePermission(roles = {"ADMIN"}, description = "只有管理员可以访问")
-@GetMapping("/admin-only")
-public ResponseEntity<String> adminOnly() {
-    return ResponseEntity.ok("管理员专用接口");
-}
-```
-
 ### 认证方式
 
 - **Session认证**: 使用HTTP Session管理用户登录状态
@@ -333,6 +319,7 @@ mvn test -Dtest=PermissionSystemTest
 3. 在 `service` 包中创建业务逻辑
 4. 在 `controller` 包中创建REST接口
 5. 添加相应的单元测试
+![Uploading image.png…]()
 
 ### 代码规范
 
